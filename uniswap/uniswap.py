@@ -129,7 +129,7 @@ class Uniswap:
         provider: str = None,
         web3: Web3 = None,
         version: int = 1,
-        max_slippage: float = 0.1,
+        max_slippage: float = 1.0,
     ) -> None:
         self.address: AddressLike = _str_to_addr(address) if isinstance(
             address, str
@@ -765,7 +765,7 @@ class Uniswap:
             logger.debug(f"nonce: {tx_params['nonce']}")
             self.last_nonce = Nonce(tx_params["nonce"] + 1)
 
-    def _get_tx_params(self, value: Wei = Wei(0), gas: Wei = Wei(250000)) -> TxParams:
+    def _get_tx_params(self, value: Wei = Wei(0), gas: Wei = Wei(21000)) -> TxParams:
         """Get generic transaction parameters."""
         return {
             "from": _addr_to_str(self.address),
