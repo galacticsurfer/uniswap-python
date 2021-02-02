@@ -765,7 +765,7 @@ class Uniswap:
             logger.debug(f"nonce: {tx_params['nonce']}")
             self.last_nonce = Nonce(tx_params["nonce"] + 1)
 
-    def _get_tx_params(self, value: Wei = Wei(0), gas: Wei = Wei(21000)) -> TxParams:
+    def _get_tx_params(self, value: Wei = Wei(0), gas: Wei = Wei(40000)) -> TxParams:
         """Get generic transaction parameters."""
         return {
             "from": _addr_to_str(self.address),
