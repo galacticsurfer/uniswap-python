@@ -129,7 +129,8 @@ class Uniswap:
         provider: str = None,
         web3: Web3 = None,
         version: int = 1,
-        max_slippage: float = 1.0,
+        max_slippage: float = 0.1,
+        gas_limit_override: int = 0
     ) -> None:
         self.address: AddressLike = _str_to_addr(address) if isinstance(
             address, str
@@ -139,6 +140,9 @@ class Uniswap:
 
         # TODO: Write tests for slippage
         self.max_slippage = max_slippage
+        
+        if gas_limit_override:
+            self.gas_limit_override = Wei(gas_limit_override)
 
         if web3:
             self.w3 = web3
@@ -767,6 +771,8 @@ class Uniswap:
 
     def _get_tx_params(self, value: Wei = Wei(0), gas: Wei = Wei(400000)) -> TxParams:
         """Get generic transaction parameters."""
+        if self.gas_limit_override:
+            gas = self.gas_limit_override
         return {
             "from": _addr_to_str(self.address),
             "value": value,
